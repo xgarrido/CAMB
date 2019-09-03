@@ -109,6 +109,7 @@
     real(dl) P(lmax),dP(lmax)
     real(dl) sinth,halfsinth, x, T2,T4
     real(dl) roots(-1:lmax+4), lfacs(lmax), lfacs2(lmax), lrootfacs(lmax)
+    integer max_lensed_ix
     real(dl) d_11(lmax),d_m11(lmax)
     real(dl) d_22(lmax),d_2m2(lmax),d_20(lmax)
     real(dl) Cphil3(lmin:lmax), CTT(lmin:lmax), CTE(lmin:lmax),CEE(lmin:lmax)
@@ -142,8 +143,12 @@
     associate(lSamp => State%CLData%CTransScal%ls, CP=>State%CP)
 
         LensAccuracyBoost = CP%Accuracy%AccuracyBoost*CP%Accuracy%LensingBoost
-
-        CL%lmax_lensed = CP%Max_l - lensed_convolution_margin
+        max_lensed_ix = lSamp%nl-1
+        do while(lSamp%l(max_lensed_ix) > CP%Max_l - lensed_convolution_margin)
+            max_lensed_ix = max_lensed_ix -1
+        end do
+        !150 is the default margin added in python by set_for_lmax
+        CL%lmax_lensed = max(lSamp%l(max_lensed_ix), CP%Max_l - 150)
 
         if (allocated(CL%Cl_lensed)) deallocate(CL%Cl_lensed)
         allocate(CL%Cl_lensed(lmin:CL%lmax_lensed,1:4), source = 0._dl)
