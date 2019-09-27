@@ -29,6 +29,8 @@
         if (global_error_flag/=0) return
     end if
 
+
+
     if (CData%CP%WantTransfer) call Transfer_Get_sigmas(Cdata, Cdata%MT)
 
     end subroutine CAMB_TransfersToPowers
@@ -398,7 +400,9 @@
     end if
     call P%DarkEnergy%ReadParams(Ini)
 
+
     P%h0 = Ini%Read_Double('hubble')
+    P%a_pol = Ini%Read_Double('a_pol')
 
     if (Ini%Read_Logical('use_physical', .true.)) then
         P%ombh2 = Ini%Read_Double('ombh2')

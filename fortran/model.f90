@@ -137,6 +137,7 @@
         real(dl)  :: omk = 0._dl !Omega_K
         real(dl)  :: omnuh2 = 0._dl !massive neutino Omega_nu h^2
         real(dl)  :: H0 = 67._dl !Hubble parameter in km/s/Mpc
+        real(dl)  :: a_pol= 1._dl !amplitude of polarisation
         real(dl)  :: TCMB = COBE_CMBTemp
         real(dl)  :: Yhe = 0.24_dl
         real(dl)  :: Num_Nu_massless = default_nnu

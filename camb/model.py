@@ -193,6 +193,7 @@ class CAMBparams(F2003Class):
         ("omk", c_double, "Omega_K"),
         ("omnuh2", c_double, "Omega_massive_neutrino h^2"),
         ("H0", c_double, "Hubble parameter is km/s/Mpc units"),
+        ("a_pol", c_double, "Amplitude of polarisation"),
         ("TCMB", c_double, "CMB temperature today in Kelvin"),
         ("YHe", c_double, "Helium mass fraction"),
         ("num_nu_massless", c_double, "Effective number of massless neutrinos"),
@@ -405,7 +406,7 @@ class CAMBparams(F2003Class):
                       mnu=0.06, nnu=constants.default_nnu, YHe=None, meffsterile=0.0,
                       standard_neutrino_neff=constants.default_nnu,
                       TCMB=constants.COBE_CMBTemp, tau=None, deltazrei=None, Alens=1.0,
-                      bbn_predictor=None, theta_H0_range=[10, 100]):
+                      bbn_predictor=None, theta_H0_range=[10, 100], a_pol=1.0):
         r"""
         Sets cosmological parameters in terms of physical densities and parameters (e.g. as used in Planck analyses).
         Default settings give a single distinct neutrino mass eigenstate, by default one neutrino with mnu = 0.06eV.
@@ -441,6 +442,7 @@ class CAMBparams(F2003Class):
         :param tau: optical depth; if None, current Reion settings are not changed
         :param deltazrei: redshift width of reionization; if None, uses default
         :param Alens: (non-physical) scaling of the lensing potential compared to prediction
+        :param a_pol: (non-physical) scaling of the polarisation
         :param bbn_predictor: :class:`.bbn.BBNPredictor` instance used to get YHe from BBN consistency if YHe is None,
          or name of a BBN predictor class, or file name of an interpolation table
         :param theta_H0_range: if thetastar or cosmomc_theta is specified, the min, max interval of H0 values to map to;
@@ -459,6 +461,7 @@ class CAMBparams(F2003Class):
         self.ombh2 = ombh2
         self.omch2 = omch2
         self.Alens = Alens
+        self.a_pol = a_pol
 
         neutrino_mass_fac = constants.neutrino_mass_fac * (constants.COBE_CMBTemp / TCMB) ** 3
 

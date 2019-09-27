@@ -494,10 +494,17 @@
             CL%Cl_lensed(l,CT_Cross) = sum(lens_contrib(CT_Cross,l,:))*fac &
                 + CL%Cl_scalar(l,C_Cross)
 
+
         end do
 
         if (DebugMsgs) call Timer%WriteTime('Time for corr lensing')
     end associate
+
+    CL%Cl_lensed(:,CT_E)=CL%Cl_lensed(:,CT_E)*State%CP%a_pol**2
+    CL%Cl_lensed(:,CT_Cross)=CL%Cl_lensed(:,CT_Cross)*State%CP%a_pol
+
+    CL%Cl_scalar(:,C_E)= CL%Cl_scalar(:,C_E)*State%CP%a_pol**2
+    CL%Cl_scalar(:,C_Cross)= CL%Cl_scalar(:,C_Cross)*State%CP%a_pol
 
     end subroutine CorrFuncFullSkyImpl
 
